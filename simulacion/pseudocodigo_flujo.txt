@@ -1,0 +1,54 @@
+Variables y Parámetros
+-mapa: una matriz 5x5 que representa las intersecciones.
+-flujo_objetivo[x][y]: matriz 5x5 con el flujo objetivo para cada intersección (x, y).
+-tasa_generacion[borde]: tasa de generación de vehículos en cada borde del mapa.
+-flujos[x][y]: flujo de vehículos observado en cada intersección (x, y) (actualizado en cada ciclo).
+-prob_movimiento[x][y]: probabilidad de que un vehículo en (x, y) gire o continúe en la misma dirección.
+
+Paso 1: Inicialización y Período Transitorio
+Para cada borde en {izquierda, derecha, superior, inferior}:
+    tasa_generacion[borde] = tasa inicial (ligeramente menor al promedio de flujo_objetivo)
+Mientras (periodo_transitorio):
+    Generar vehículos en cada borde de acuerdo a tasa_generacion[borde]
+    Para cada vehículo:
+        Asignar probabilidad de movimiento en cada intersección según prob_movimiento[x][y]
+        Actualizar flujos[x][y] en cada intersección según paso de vehículos
+    Ajustar probabilidades de movimiento basadas en los flujos observados para distribuir el tráfico
+
+Paso 2: Asignación de Probabilidades de Movimiento en Cada Intersección
+Para cada intersección (x, y):
+    Calcular prob_movimiento[x][y] basándose en flujo_objetivo y el flujo de las intersecciones adyacentes
+    // Ajuste la probabilidad para redistribuir el flujo hacia áreas menos congestionadas
+
+
+Paso 3: Control de Generación por "Tasa de Entrada" en Cada Borde
+Mientras (simulación en curso):
+    Para cada borde en {izquierda, derecha, superior, inferior}:
+        Generar vehículos en intervalos basados en tasa_generacion[borde]
+        // Dirigir cada vehículo hacia la intersección correspondiente en el borde del mapa
+    Para cada vehículo:
+        Avanzar el vehículo según probabilidad de movimiento definida en cada intersección
+        Actualizar flujos[x][y] según la nueva posición del vehículo
+
+Paso 4: Ajuste de Tasa de Generación mediante Retroalimentación
+Mientras (simulación en curso):
+    // Al final de cada ciclo de simulación:
+    Para cada intersección (x, y) en mapa:
+        desviacion = flujo_objetivo[x][y] - flujos[x][y]
+
+        Si desviacion > 0: // Flujo real por debajo del objetivo
+            Aumentar tasa_generacion en el borde correspondiente para compensar
+
+        Si desviacion < 0: // Flujo real por encima del objetivo
+            Reducir tasa_generacion en el borde correspondiente para reducir flujo en esa intersección
+        // Mantener los ajustes dentro de límites razonables para evitar oscilaciones extremas
+
+    // Reiniciar los contadores de flujos[x][y] para el siguiente ciclo
+    Reiniciar flujos[x][y] a 0 para cada intersección (x, y)
+
+Paso 5: Finalización y Mantenimiento del Flujo Estable
+Mientras (simulación en curso):
+    Continuar monitoreando el flujo de cada intersección
+    Ajustar tasa_generacion y prob_movimiento[x][y] en función de la diferencia entre flujo objetivo y flujo observado
+    Regenerar vehículos en los bordes cada vez que un vehículo sale del mapa para mantener flujo continuo
+
