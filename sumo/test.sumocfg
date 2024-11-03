@@ -11,4 +11,9 @@
         <additional-files value="test.add.xml"/>
     </input>
 
+    <!-- <report>
+        <tripinfo-output value="tripinfo.xml"/>
+    </report> -->
+
+
 </sumoConfiguration>
