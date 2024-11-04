@@ -4,18 +4,27 @@ from entrenamiento_rutas import algoritmo_genetico
 from entrenamiento_parametros import algoritmo_genetico_parametros
 
 # Dimensiones y configuración
-N = 5  # Tamaño del mapa (5x5)
+N = 4  # Tamaño del mapa (4x4)
 
 # Inicializar matriz de vecindad
-matriz_vecindad = np.zeros((N * N, N * N), dtype=int)
-for fila in range(N):
-    for columna in range(N):
-        indice_actual = fila * N + columna
-        # Vecinos
-        if fila > 0: matriz_vecindad[indice_actual][(fila - 1) * N + columna] = 1
-        if fila < N - 1: matriz_vecindad[indice_actual][(fila + 1) * N + columna] = 1
-        if columna > 0: matriz_vecindad[indice_actual][fila * N + (columna - 1)] = 1
-        if columna < N - 1: matriz_vecindad[indice_actual][fila * N + (columna + 1)] = 1
+matriz_vecindad = np.array([
+    [0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],#0
+    [0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],#1
+    [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],#2
+    [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0],#3
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],#4
+    [0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0],#5
+    [0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],#6
+    [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0],#7
+    [0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0],#8
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0],#9
+    [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0],#10
+    [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1],#11
+    [0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0],#12
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0],#13
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0],#14
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0]#15
+])
 
 # Flujo objetivo
 flujo_objetivo = np.random.randint(50, 100, size=(N, N))
@@ -43,6 +52,17 @@ print("\nMejor conjunto de rutas:")
 for i, ruta in enumerate(mejor_rutas):
     print(f"Ruta {i+1}: {ruta} con {mejor_autos_por_ruta[i]} autos/hora")
 
+# Guardar los mejores parámetros y rutas en un archivo de texto
+with open("resultados.txt", "w") as archivo:
+    archivo.write("Mejor conjunto de rutas:\n")
+    for i, ruta in enumerate(mejor_rutas):
+        archivo.write(f"Ruta {i+1}: {ruta} con {mejor_autos_por_ruta[i]} autos/hora\n")
+    
+    archivo.write("\nMejores parámetros ajustados:\n")
+    archivo.write(f"NUM_RUTAS: {NUM_RUTAS}\n")
+    archivo.write(f"LONG_MAX_RUTAS: {LONG_MAX_RUTAS}\n")
+    archivo.write(f"AUTOS_POR_RUTA_MIN: {AUTOS_POR_RUTA_MIN}\n")
+    archivo.write(f"AUTOS_POR_RUTA_MAX: {AUTOS_POR_RUTA_MAX}\n")
 
 import matplotlib.pyplot as plt
 
