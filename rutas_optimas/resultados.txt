@@ -1,0 +1,20 @@
+Mejor conjunto de rutas:
+Ruta 1: [13, 12, 8, 4, 0, 1, 5, 9, 13, 12] con 9 autos/hora
+Ruta 2: [13, 12, 8, 9, 10, 11, 7, 6, 5, 9] con 9 autos/hora
+Ruta 3: [3, 7, 11, 15, 14, 10, 11, 15, 14, 13] con 8 autos/hora
+Ruta 4: [5, 4, 0, 1, 2, 3, 7, 11, 15, 14] con 9 autos/hora
+Ruta 5: [13, 12, 8, 9, 10, 6, 2, 3, 7, 6] con 8 autos/hora
+Ruta 6: [15, 14, 13, 12, 8, 4, 0, 1, 5, 9] con 8 autos/hora
+Ruta 7: [14, 13, 12, 8, 4, 0, 1, 2, 3, 7] con 9 autos/hora
+Ruta 8: [1, 5, 9, 13, 12, 8, 9, 10, 11, 15] con 8 autos/hora
+Ruta 9: [0, 1, 5, 4, 0, 4, 0, 1, 2, 3] con 9 autos/hora
+Ruta 10: [1, 2, 3, 7, 6, 5, 9, 13, 12, 8] con 9 autos/hora
+Ruta 11: [5, 4, 0, 1, 2, 3, 7, 11, 15, 14] con 8 autos/hora
+Ruta 12: [11, 15, 14, 13, 12, 8, 9, 10, 6, 5] con 8 autos/hora
+Ruta 13: [14, 10, 6, 2, 3, 7, 11, 15, 14, 13] con 10 autos/hora
+
+Mejores parámetros ajustados:
+NUM_RUTAS: 13
+LONG_MAX_RUTAS: 10
+AUTOS_POR_RUTA_MIN: 8
+AUTOS_POR_RUTA_MAX: 11

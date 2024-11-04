@@ -35,6 +35,7 @@ def calcular_fitness(individuo, autos_por_ruta,N,matriz_vecindad,flujo_objetivo)
 
     # Penalización por rutas que no respetan la vecindad
     penalidad_vecindad = 0
+    
     for ruta in individuo:
         for j in range(len(ruta) - 1):
             if matriz_vecindad[ruta[j], ruta[j + 1]] == 0:
