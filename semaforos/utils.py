@@ -110,14 +110,14 @@ def generar_nueva_generacion(progenitores, fitness_prog, hijos, cantidad_poblaci
         hijos.append(mejor_individuo)
         return hijos
 
-def entrenar(funcion_aptitud,cantidad_poblacion=6,tipo_reemplazo='REEMPLAZO TOTAL',aptitud_requerida=-0.55, longitud=10,imprimir=True):
+def entrenar(funcion_aptitud,cantidad_poblacion=6,tipo_reemplazo='REEMPLAZO TOTAL',max_it=100,aptitud_requerida=-0.55, longitud=10,imprimir=True):
     # SE USA UNA LONGITUD DE 14 PARA TENER SUFICIENTES BITS PARA REPRESENTAR X e Y
     individuos = inicializar_poblacion(longitud, cantidad=cantidad_poblacion)
     mejor_individuo, mejor_aptitud, fitness = evaluar(funcion_aptitud,individuos)
     
     progreso = [mejor_individuo]
     it=0
-    while mejor_aptitud < aptitud_requerida:
+    while (mejor_aptitud < aptitud_requerida) and (it < max_it):
 
         # GENERAR NUEVA POBLACION
         if(tipo_reemplazo=='REEMPLAZO TOTAL'):
