@@ -1,5 +1,5 @@
 from utils import entrenar
-from editar_sumo import editar_tiempos_semaforos, ejecutar_simulacion
+from editar_sumo import ejecutar_simulacion, actualizar_fases_semaforos
 
 def codificar(vt): # recibe vector con tiempos semáforo entre 0 y 64 = 6 bits por tiempo semaforo => 12 bits por semaforo
     binario = ''.join(f'{x:06b}{y:06b}' for x, y in vt)
@@ -13,7 +13,7 @@ def decodificar(binario):
 def funcion_aptitud(individuo):
     vt = decodificar(individuo)
     # pasar tiempos semáforo a SUMO
-    editar_tiempos_semaforos(vt)
+    actualizar_fases_semaforos(vt)
     # obtener datos de SUMO
     waiting_time, avg_speed, waiting_time_per_vehicle = ejecutar_simulacion()
 
@@ -26,7 +26,25 @@ ind, it_ev, progreso, mejor_aptitud =  entrenar(
     tipo_reemplazo='ELITISMO',
     aptitud_requerida=100,
     longitud=144,
-    max_it=10
+    max_it=1
 )
 sol = decodificar(ind)
 print(f"Algoritmo Genético: x = {sol}, f(x) = {mejor_aptitud} Iteraciones: {it_ev}")
+
+"""
+ejemplo_inicial = [(13, 36), (46, 10), (16, 21), (4, 15), (45, 9), (28, 48), (55, 48), (63, 8), (45, 21), (34, 18), (60, 52), (30, 55)]
+actualizar_fases_semaforos(ejemplo_inicial)
+waiting_time, avg_speed, waiting_time_per_vehicle = ejecutar_simulacion()
+print('---------------- SIN OPTIMIZACIÓN---------------------')
+print(f"Tiempo espera total: {waiting_time}")
+print(f"Tiempo espera x vehículo: {waiting_time_per_vehicle}")
+print(f"Velocidad media vehículos: {avg_speed}")
+
+sol = [(61, 18), (23, 3), (10, 3), (61, 4), (4, 15), (3, 13), (16, 4), (15, 51), (9, 2), (47, 15), (1, 6), (0, 2)]
+actualizar_fases_semaforos(sol)
+waiting_time, avg_speed, waiting_time_per_vehicle = ejecutar_simulacion()
+print('---------------- CON OPTIMIZACIÓN---------------------')
+print(f"Tiempo espera total: {waiting_time}")
+print(f"Tiempo espera x vehículo: {waiting_time_per_vehicle}")
+print(f"Velocidad media vehículos: {avg_speed}")
+"""

@@ -1,56 +1,37 @@
 import xml.etree.ElementTree as ET
 import subprocess
 
-def editar_tiempos_semaforos(vector_tiempos,archivo_xml="../sumo/test.net.xml"):
-    """
-    Edita el archivo XML de SUMO para actualizar los tiempos y estados de los semáforos.
-    Si faltan fases en algún semáforo, las agrega con valores por defecto.
-    
-    Args:
-    archivo_xml (str): Ruta del archivo XML a modificar.
-    vector_tiempos (list of tuple): Lista de tuplas, donde cada tupla contiene dos enteros.
-                                    El primer entero es el tiempo de verde y el segundo es el tiempo de rojo.
-    """
+def actualizar_fases_semaforos( vector_tiempos, archivo_xml="../sumo/test.net.xml"):
     # Cargar el archivo XML
     tree = ET.parse(archivo_xml)
     root = tree.getroot()
-
-    # Iterar sobre el vector de tiempos y actualizar cada semáforo
-    for idx, (verde, rojo) in enumerate(vector_tiempos):
-        semaforo_id = f"S{idx+1}"
-        tlLogic = root.find(f".//tlLogic[@id='{semaforo_id}']")
+    
+    # Iterar sobre cada tlLogic en el archivo XML
+    for idx, tlLogic in enumerate(root.findall("tlLogic")):
+        if idx >= len(vector_tiempos):
+            break  # Evitar exceder el tamaño del vector
         
-        if tlLogic is not None:
-            # Obtener las fases existentes o agregar las que falten
-            phases = tlLogic.findall("phase")
-            while len(phases) < 4:
-                # Agregar fase por defecto hasta que haya 4
-                new_phase = ET.Element("phase", duration="0", state="rrrr")
-                tlLogic.append(new_phase)
-                phases = tlLogic.findall("phase")
-                print(phases)
+        verde, rojo = vector_tiempos[idx]
+        verde +=1
+        rojo +=1
+        fases = list(tlLogic.findall("phase"))
+        
+        # Asignar tiempos de verde y rojo en las fases según el tipo de semáforo
+        if len(fases) == 3:
+            # Semáforos con 1 dirección
+            fases[0].set("duration", str(verde))  # Fase en verde
+            fases[1].set("duration", "3")         # Fase en amarillo
+            fases[2].set("duration", str(rojo))   # Fase en rojo
+        elif len(fases) == 4:
+            # Semáforos con 2 direcciones
+            fases[0].set("duration", str(verde))  # Fase en verde para una dirección
+            fases[1].set("duration", "3")         # Fase en amarillo para una dirección
+            fases[2].set("duration", str(rojo))   # Fase en verde para la otra dirección
+            fases[3].set("duration", "3")         # Fase en amarillo para la otra dirección
 
-            # Actualizar la duración y el estado de cada fase
-            phases[0].set("duration", str(verde))  # Verde
-            phases[0].set("state", "GGrr")
-            
-            phases[1].set("duration", "3")         # Amarillo
-            phases[1].set("state", "yyrr")
-            
-            phases[2].set("duration", str(rojo))   # Rojo
-            phases[2].set("state", "rrGG")
-            
-            phases[3].set("duration", "3")         # Amarillo en sentido opuesto
-            phases[3].set("state", "rryy")
-
-    # Guardar los cambios en el archivo XML
+    # Guardar los cambios en el mismo archivo XML
     tree.write(archivo_xml, encoding="utf-8", xml_declaration=True)
-    #print(f"Archivo {archivo_xml} actualizado con los nuevos tiempos y estados de semáforos.")
-
-# Ejemplo de uso
-#vector_tiempos = [(42, 30), (50, 40), (60, 45)]
-#editar_tiempos_semaforos(vector_tiempos)
-
+    #print(f"Archivo '{archivo_xml}' actualizado exitosamente.")
 
 
 def ejecutar_simulacion(sumo_config="../sumo/test.sumocfg", tripinfo_output="../sumo/tripinfo.xml"):

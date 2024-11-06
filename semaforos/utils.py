@@ -19,9 +19,7 @@ def evaluar(funcion_aptitud,individuos):
         if f > mejor_aptitud: 
             mejor_aptitud = f
             mejor = individuo
-
-    print(mejor_aptitud)
-            
+        
     return mejor, mejor_aptitud,fitness
 
 def ordenar_y_sumar(individuos, fitness_normalizado):
