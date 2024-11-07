@@ -3,13 +3,13 @@ import random
 from entrenamiento_rutas import algoritmo_genetico, calcular_fitness
 
 POPULATION_SIZE = 50
-GENERATIONS = 100
-MUTATION_RATE = 0.1
+GENERATIONS = 10
+MUTATION_RATE = 0.15
 
 # Parámetros a ajustar
 NUM_RUTAS_MIN, NUM_RUTAS_MAX = 5, 20
 LONG_MAX_RUTAS_MIN, LONG_MAX_RUTAS_MAX = 4, 15
-AUTOS_POR_RUTA_MIN, AUTOS_POR_RUTA_MAX = 1, 60
+AUTOS_POR_RUTA_MIN, AUTOS_POR_RUTA_MAX = 10, 500
 
 # Nueva función de fitness que evalúa los parámetros
 def fitness_parametros(params, N, matriz_vecindad, flujo_objetivo):
@@ -42,7 +42,7 @@ def algoritmo_genetico_parametros(N, matriz_vecindad, flujo_objetivo):
             random.randint(AUTOS_POR_RUTA_MIN, AUTOS_POR_RUTA_MAX),
             random.randint(AUTOS_POR_RUTA_MIN, AUTOS_POR_RUTA_MAX)
         ]
-        for _ in range(50)  # Tamaño de la población
+        for _ in range(POPULATION_SIZE)  # Tamaño de la población
     ]
     
     mejor_fitness = float('inf')
@@ -61,6 +61,8 @@ def algoritmo_genetico_parametros(N, matriz_vecindad, flujo_objetivo):
             hijo[1] = np.clip(hijo[1], LONG_MAX_RUTAS_MIN, LONG_MAX_RUTAS_MAX)
             hijo[2] = np.clip(hijo[2], AUTOS_POR_RUTA_MIN, AUTOS_POR_RUTA_MAX)
             hijo[3] = np.clip(hijo[3], AUTOS_POR_RUTA_MIN, AUTOS_POR_RUTA_MAX)
+
+            hijo = mutacion(hijo)
 
             nueva_poblacion.append(hijo)
 
@@ -88,5 +90,16 @@ def cruce(padre1, padre2):
     punto_cruce = random.randint(1, 3)  # Cruce entre parámetros
     hijo = padre1[:punto_cruce] + padre2[punto_cruce:]
     return hijo
+
+def mutacion(individuo):
+    for i in range(len(individuo)):
+        if random.random() < MUTATION_RATE:
+            if i == 0:  # MUTAR NUM_RUTAS
+                individuo[i] = random.randint(NUM_RUTAS_MIN, NUM_RUTAS_MAX)
+            elif i == 1:  # MUTAR LONG_MAX_RUTAS
+                individuo[i] = random.randint(LONG_MAX_RUTAS_MIN, LONG_MAX_RUTAS_MAX)
+            elif i == 2 or i == 3:  # MUTAR AUTOS_POR_RUTA_MIN o AUTOS_POR_RUTA_MAX
+                individuo[i] = random.randint(AUTOS_POR_RUTA_MIN, AUTOS_POR_RUTA_MAX)
+    return individuo
 
 

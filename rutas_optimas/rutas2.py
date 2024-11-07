@@ -1,34 +1,18 @@
 import numpy as np
-import random
-from entrenamiento_rutas import algoritmo_genetico
-from entrenamiento_parametros import algoritmo_genetico_parametros
 
 # Dimensiones y configuración
 N = 4  # Tamaño del mapa (4x4)
 
-# Inicializar matriz de vecindad
-matriz_vecindad = np.array([
-    [0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],#0
-    [0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],#1
-    [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],#2
-    [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0],#3
-    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],#4
-    [0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0],#5
-    [0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],#6
-    [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0],#7
-    [0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0],#8
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0],#9
-    [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0],#10
-    [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1],#11
-    [0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0],#12
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0],#13
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0],#14
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0]#15
-])
-
-
 # Flujo objetivo
-flujo_objetivo = np.random.randint(50, 100, size=(N, N))
+flujo_objetivo_20s = np.array([
+    [10, 15, 12, 8],
+    [12, 14, 16, 13],
+    [13, 16, 17, 12],
+    [9, 7, 11, 14]
+])
+# Flujo objetivo x hora
+flujo_objetivo = flujo_objetivo_20s * 3 * 60
+print(flujo_objetivo)
 
 import matplotlib.pyplot as plt
 mejor_rutas = []

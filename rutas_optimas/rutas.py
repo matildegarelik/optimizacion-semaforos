@@ -27,12 +27,15 @@ matriz_vecindad = np.array([
 ])
 
 # Flujo objetivo
-flujo_objetivo = np.random.randint(50, 100, size=(N, N))
-
-# Algoritmo Genético
-POPULATION_SIZE = 500
-GENERATIONS = 1000
-MUTATION_RATE = 0.1
+# Flujo objetivo
+flujo_objetivo_20s = np.array([
+    [10, 15, 12, 8],
+    [12, 14, 16, 13],
+    [13, 16, 17, 12],
+    [9, 7, 11, 14]
+])
+# Flujo objetivo x hora
+flujo_objetivo = flujo_objetivo_20s * 3 * 60
 
 # Ejecutar el algoritmo genético para ajustar parámetros
 mejores_parametros = algoritmo_genetico_parametros(N, matriz_vecindad, flujo_objetivo)
