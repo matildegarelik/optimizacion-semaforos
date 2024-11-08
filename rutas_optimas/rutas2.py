@@ -12,7 +12,6 @@ flujo_objetivo_20s = np.array([
 ])
 # Flujo objetivo x hora
 flujo_objetivo = flujo_objetivo_20s * 3 * 60
-print(flujo_objetivo)
 
 import matplotlib.pyplot as plt
 mejor_rutas = []

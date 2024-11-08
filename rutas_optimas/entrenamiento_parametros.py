@@ -3,13 +3,13 @@ import random
 from entrenamiento_rutas import algoritmo_genetico, calcular_fitness
 
 POPULATION_SIZE = 50
-GENERATIONS = 10
+GENERATIONS = 1000
 MUTATION_RATE = 0.15
 
 # Parámetros a ajustar
 NUM_RUTAS_MIN, NUM_RUTAS_MAX = 5, 20
-LONG_MAX_RUTAS_MIN, LONG_MAX_RUTAS_MAX = 4, 15
-AUTOS_POR_RUTA_MIN, AUTOS_POR_RUTA_MAX = 10, 500
+LONG_MAX_RUTAS_MIN, LONG_MAX_RUTAS_MAX = 4, 20
+AUTOS_POR_RUTA_MIN, AUTOS_POR_RUTA_MAX = 300, 450
 
 # Nueva función de fitness que evalúa los parámetros
 def fitness_parametros(params, N, matriz_vecindad, flujo_objetivo):
@@ -27,7 +27,9 @@ def fitness_parametros(params, N, matriz_vecindad, flujo_objetivo):
 
     
     # Ejecutar el algoritmo genético original para obtener el fitness
-    mejor_rutas, mejor_autos_por_ruta = algoritmo_genetico(N, NUM_RUTAS, LONG_MAX_RUTAS, AUTOS_POR_RUTA_MIN, AUTOS_POR_RUTA_MAX, matriz_vecindad, flujo_objetivo, imprimir=False)
+    mejor_rutas, mejor_autos_por_ruta = algoritmo_genetico(N, NUM_RUTAS, LONG_MAX_RUTAS, AUTOS_POR_RUTA_MIN, 
+                                                           AUTOS_POR_RUTA_MAX, matriz_vecindad, flujo_objetivo, 
+                                                           imprimir=False, POPULATION_SIZE = 50, GENERATIONS = 100, MUTATION_RATE = 0.1)
     fitness = calcular_fitness(mejor_rutas, mejor_autos_por_ruta, N, matriz_vecindad, flujo_objetivo)
     
     return fitness
@@ -91,15 +93,20 @@ def cruce(padre1, padre2):
     hijo = padre1[:punto_cruce] + padre2[punto_cruce:]
     return hijo
 
+# Añadir función de mutación con comprobación de valores válidos
 def mutacion(individuo):
     for i in range(len(individuo)):
         if random.random() < MUTATION_RATE:
+            # Genera una nueva mutación según el rango correspondiente
             if i == 0:  # MUTAR NUM_RUTAS
                 individuo[i] = random.randint(NUM_RUTAS_MIN, NUM_RUTAS_MAX)
             elif i == 1:  # MUTAR LONG_MAX_RUTAS
                 individuo[i] = random.randint(LONG_MAX_RUTAS_MIN, LONG_MAX_RUTAS_MAX)
-            elif i == 2 or i == 3:  # MUTAR AUTOS_POR_RUTA_MIN o AUTOS_POR_RUTA_MAX
-                individuo[i] = random.randint(AUTOS_POR_RUTA_MIN, AUTOS_POR_RUTA_MAX)
+            elif i == 2:  # MUTAR AUTOS_POR_RUTA_MIN
+                if AUTOS_POR_RUTA_MIN < AUTOS_POR_RUTA_MAX:  # Validar el rango
+                    individuo[i] = random.randint(AUTOS_POR_RUTA_MIN, AUTOS_POR_RUTA_MAX)
+            elif i == 3:  # MUTAR AUTOS_POR_RUTA_MAX
+                if AUTOS_POR_RUTA_MIN < AUTOS_POR_RUTA_MAX:  # Validar el rango
+                    individuo[i] = random.randint(AUTOS_POR_RUTA_MIN, AUTOS_POR_RUTA_MAX)
     return individuo
-
 
