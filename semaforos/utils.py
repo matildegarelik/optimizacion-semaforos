@@ -1,5 +1,7 @@
 import random
 import math
+from datetime import datetime
+import csv
 
 def inicializar_poblacion(longitud, cantidad):
    return [''.join(random.choice('01') for _ in range(longitud)) for _ in range(cantidad)]
@@ -108,36 +110,52 @@ def generar_nueva_generacion(progenitores, fitness_prog, hijos, cantidad_poblaci
         hijos.append(mejor_individuo)
         return hijos
 
-def entrenar(funcion_aptitud,cantidad_poblacion=6,tipo_reemplazo='REEMPLAZO TOTAL',max_it=100,aptitud_requerida=-0.55, longitud=10,imprimir=True):
-    # SE USA UNA LONGITUD DE 14 PARA TENER SUFICIENTES BITS PARA REPRESENTAR X e Y
+def entrenar(funcion_aptitud,cantidad_poblacion=6,tipo_reemplazo='REEMPLAZO TOTAL',max_it=100,aptitud_requerida=-0.55, longitud=10,imprimir=True, params_aptitud=None):
+    fecha_hora_actual = datetime.now().strftime("%Y%m%d_%H%M%S")
+    nombre_archivo = f"results/output_{fecha_hora_actual}.csv"
+    
     individuos = inicializar_poblacion(longitud, cantidad=cantidad_poblacion)
     mejor_individuo, mejor_aptitud, fitness = evaluar(funcion_aptitud,individuos)
     
     progreso = [mejor_individuo]
     it=0
-    while (mejor_aptitud < aptitud_requerida) and (it < max_it):
 
-        # GENERAR NUEVA POBLACION
-        if(tipo_reemplazo=='REEMPLAZO TOTAL'):
-            cantidad_padres = cantidad_poblacion
-        elif(tipo_reemplazo=='REEMPLAZO CON BRECHA'):
-            cantidad_padres = math.floor(0.8 * cantidad_poblacion)
-        elif(tipo_reemplazo=='ELITISMO'):
-            cantidad_padres = cantidad_poblacion-1
-            #individuos.remove(mejor_individuo)
+    with open(nombre_archivo, mode='w', newline='') as archivo_csv:
+        escritor_csv = csv.writer(archivo_csv)
+        escritor_csv.writerow(["Iteracion", "Mejor Aptitud", "Velocidad promedio", "Tiempo espera promedio"])
+        
+        # Guardar la primera iteración en el archivo CSV
+        avg_speed, avg_waiting_time = params_aptitud(mejor_individuo)
+        escritor_csv.writerow([it, mejor_aptitud, avg_speed,avg_waiting_time])
 
-        progenitores, fitness_prog = seleccionar(individuos, fitness, cantidad=cantidad_padres, tipo='VENTANA')
+        while (mejor_aptitud < aptitud_requerida) and (it < max_it):
 
-        hijos = reproducir(progenitores)
-        #reemplazo
-        individuos = generar_nueva_generacion(progenitores, fitness_prog, hijos, cantidad_poblacion,tipo=tipo_reemplazo,mejor_individuo=mejor_individuo)
+            # GENERAR NUEVA POBLACION
+            if(tipo_reemplazo=='REEMPLAZO TOTAL'):
+                cantidad_padres = cantidad_poblacion
+            elif(tipo_reemplazo=='REEMPLAZO CON BRECHA'):
+                cantidad_padres = math.floor(0.8 * cantidad_poblacion)
+            elif(tipo_reemplazo=='ELITISMO'):
+                cantidad_padres = cantidad_poblacion-1
+                #individuos.remove(mejor_individuo)
 
-        #EVALUAR
-        mejor_individuo, mejor_aptitud, fitness = evaluar(funcion_aptitud,individuos)
-        progreso.append(mejor_individuo)
-        if imprimir:
-            print(f"Iteración {it} - Mejor Aptitud: {mejor_aptitud}")
-        it+=1
+            progenitores, fitness_prog = seleccionar(individuos, fitness, cantidad=cantidad_padres, tipo='VENTANA')
+
+            hijos = reproducir(progenitores)
+            #reemplazo
+            individuos = generar_nueva_generacion(progenitores, fitness_prog, hijos, cantidad_poblacion,tipo=tipo_reemplazo,mejor_individuo=mejor_individuo)
+
+            #EVALUAR
+            mejor_individuo, mejor_aptitud, fitness = evaluar(funcion_aptitud,individuos)
+            progreso.append(mejor_individuo)
+
+            # Guardar la iteración actual y mejor aptitud en el archivo CSV
+            avg_speed, avg_waiting_time = params_aptitud(mejor_individuo)
+            escritor_csv.writerow([it + 1, mejor_aptitud, avg_speed,avg_waiting_time])
+
+            if imprimir:
+                print(f"Iteración {it} - Mejor Aptitud: {mejor_aptitud}")
+            it+=1
 
     return mejor_individuo, it, progreso, mejor_aptitud
     
