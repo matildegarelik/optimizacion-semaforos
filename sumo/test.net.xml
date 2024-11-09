@@ -186,71 +186,71 @@
     </edge>
 
     <tlLogic id="S1" type="static" programID="0" offset="0">
-        <phase duration="62" state="GG" />
+        <phase duration="38" state="GG" />
         <phase duration="3" state="yy" />
-        <phase duration="19" state="rr" />
+        <phase duration="53" state="rr" />
     </tlLogic>
     <tlLogic id="S10" type="static" programID="0" offset="0">
-        <phase duration="24" state="Gr" />
+        <phase duration="58" state="Gr" />
         <phase duration="3" state="yr" />
-        <phase duration="4" state="rG" />
+        <phase duration="35" state="rG" />
         <phase duration="3" state="ry" />
     </tlLogic>
     <tlLogic id="S11" type="static" programID="0" offset="0">
-        <phase duration="11" state="Gr" />
+        <phase duration="23" state="Gr" />
         <phase duration="3" state="yr" />
-        <phase duration="4" state="rG" />
+        <phase duration="9" state="rG" />
         <phase duration="3" state="ry" />
     </tlLogic>
     <tlLogic id="S12" type="static" programID="0" offset="0">
-        <phase duration="62" state="GG" />
+        <phase duration="39" state="GG" />
         <phase duration="3" state="yy" />
-        <phase duration="5" state="rr" />
+        <phase duration="41" state="rr" />
     </tlLogic>
     <tlLogic id="S2" type="static" programID="0" offset="0">
-        <phase duration="5" state="Gr" />
+        <phase duration="43" state="Gr" />
         <phase duration="3" state="yr" />
-        <phase duration="16" state="rG" />
+        <phase duration="25" state="rG" />
         <phase duration="3" state="ry" />
     </tlLogic>
     <tlLogic id="S3" type="static" programID="0" offset="0">
-        <phase duration="4" state="Gr" />
+        <phase duration="52" state="Gr" />
         <phase duration="3" state="yr" />
-        <phase duration="14" state="rG" />
+        <phase duration="59" state="rG" />
         <phase duration="3" state="ry" />
     </tlLogic>
     <tlLogic id="S4" type="static" programID="0" offset="0">
         <phase duration="17" state="GGrr" />
         <phase duration="3" state="yyrr" />
-        <phase duration="5" state="rrGG" />
+        <phase duration="35" state="rrGG" />
         <phase duration="3" state="rryy" />
     </tlLogic>
     <tlLogic id="S5" type="static" programID="0" offset="0">
-        <phase duration="16" state="GGrr" />
+        <phase duration="5" state="GGrr" />
         <phase duration="3" state="yyrr" />
-        <phase duration="52" state="rrGG" />
+        <phase duration="56" state="rrGG" />
         <phase duration="3" state="rryy" />
     </tlLogic>
     <tlLogic id="S6" type="static" programID="0" offset="0">
-        <phase duration="10" state="GG" />
+        <phase duration="8" state="GG" />
         <phase duration="3" state="yy" />
-        <phase duration="3" state="rr" />
+        <phase duration="25" state="rr" />
     </tlLogic>
     <tlLogic id="S7" type="static" programID="0" offset="0">
-        <phase duration="48" state="GG" />
+        <phase duration="23" state="GG" />
         <phase duration="3" state="yy" />
-        <phase duration="16" state="rr" />
+        <phase duration="62" state="rr" />
     </tlLogic>
     <tlLogic id="S8" type="static" programID="0" offset="0">
-        <phase duration="2" state="GGrr" />
+        <phase duration="6" state="GGrr" />
         <phase duration="3" state="yyrr" />
-        <phase duration="7" state="rrGG" />
+        <phase duration="2" state="rrGG" />
         <phase duration="3" state="rryy" />
     </tlLogic>
     <tlLogic id="S9" type="static" programID="0" offset="0">
-        <phase duration="1" state="GGrr" />
+        <phase duration="46" state="GGrr" />
         <phase duration="3" state="yyrr" />
-        <phase duration="3" state="rrGG" />
+        <phase duration="36" state="rrGG" />
         <phase duration="3" state="rryy" />
     </tlLogic>
 

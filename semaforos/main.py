@@ -32,7 +32,7 @@ sol = decodificar(ind)
 print(f"Algoritmo Genético: x = {sol}, f(x) = {mejor_aptitud} Iteraciones: {it_ev}")
 
 """
-ejemplo_inicial = [(13, 36), (46, 10), (16, 21), (4, 15), (45, 9), (28, 48), (55, 48), (63, 8), (45, 21), (34, 18), (60, 52), (30, 55)]
+ejemplo_inicial = [(37, 52), (57, 34), (22, 8), (38, 40), (42, 24), (51, 58), (16, 34), (4, 55), (7, 24), (22, 61), (5, 1), (45, 35)]
 actualizar_fases_semaforos(ejemplo_inicial)
 waiting_time, avg_speed, waiting_time_per_vehicle = ejecutar_simulacion()
 print('---------------- SIN OPTIMIZACIÓN---------------------')
