@@ -9,7 +9,7 @@ MUTATION_RATE = 0.15
 # Parámetros a ajustar
 NUM_RUTAS_MIN, NUM_RUTAS_MAX = 5, 20
 LONG_MAX_RUTAS_MIN, LONG_MAX_RUTAS_MAX = 4, 20
-AUTOS_POR_RUTA_MIN, AUTOS_POR_RUTA_MAX = 300, 450
+AUTOS_POR_RUTA_MIN, AUTOS_POR_RUTA_MAX = 30, 150
 
 # Nueva función de fitness que evalúa los parámetros
 def fitness_parametros(params, N, matriz_vecindad, flujo_objetivo):
