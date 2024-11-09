@@ -35,7 +35,7 @@ flujo_objetivo_20s = np.array([
     [9, 7, 11, 14]
 ])
 # Flujo objetivo x hora
-flujo_objetivo = flujo_objetivo_20s * 3 * 60
+flujo_objetivo = flujo_objetivo_20s * 60
 
 # Ejecutar el algoritmo genético para ajustar parámetros
 """mejores_parametros = algoritmo_genetico_parametros(N, matriz_vecindad, flujo_objetivo)
@@ -48,12 +48,12 @@ AUTOS_POR_RUTA_MAX = mejores_parametros[3]
 """
 NUM_RUTAS= 12
 LONG_MAX_RUTAS= 9
-AUTOS_POR_RUTA_MIN= 318
-AUTOS_POR_RUTA_MAX= 339
+AUTOS_POR_RUTA_MIN= 50
+AUTOS_POR_RUTA_MAX= 150
 
 # Ejecutar el algoritmo genético
 mejor_rutas, mejor_autos_por_ruta = algoritmo_genetico(N, NUM_RUTAS, LONG_MAX_RUTAS, AUTOS_POR_RUTA_MIN, AUTOS_POR_RUTA_MAX, matriz_vecindad, flujo_objetivo,
-                       POPULATION_SIZE = 1000, GENERATIONS = 100, MUTATION_RATE = 0.125)
+                       POPULATION_SIZE = 500, GENERATIONS = 200, MUTATION_RATE = 0.1)
 
 # Resultados
 print("\nMejor conjunto de rutas:")
