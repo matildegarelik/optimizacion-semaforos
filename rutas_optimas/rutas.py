@@ -28,14 +28,14 @@ matriz_vecindad = np.array([
 
 # Flujo objetivo
 # Flujo objetivo
-flujo_objetivo_20s = np.array([
+flujo_objetivo_30s = np.array([
     [10, 15, 12, 8],
     [12, 14, 16, 13],
     [13, 16, 17, 12],
     [9, 7, 11, 14]
 ])
 # Flujo objetivo x hora
-flujo_objetivo = flujo_objetivo_20s * 30
+flujo_objetivo = flujo_objetivo_30s * 2 * 10 # cantidad de autos q pasan en 10 min
 
 # Ejecutar el algoritmo genético para ajustar parámetros
 mejores_parametros = algoritmo_genetico_parametros(N, matriz_vecindad, flujo_objetivo)
@@ -53,7 +53,7 @@ AUTOS_POR_RUTA_MAX= 100
 """
 # Ejecutar el algoritmo genético
 mejor_rutas, mejor_autos_por_ruta = algoritmo_genetico(N, NUM_RUTAS, LONG_MAX_RUTAS, AUTOS_POR_RUTA_MIN, AUTOS_POR_RUTA_MAX, matriz_vecindad, flujo_objetivo,
-                       POPULATION_SIZE = 500, GENERATIONS = 500, MUTATION_RATE = 0.1)
+                       POPULATION_SIZE = 500, GENERATIONS = 1500, MUTATION_RATE = 0.1)
 
 # Resultados
 print("\nMejor conjunto de rutas:")

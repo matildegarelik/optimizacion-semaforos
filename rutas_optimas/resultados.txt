@@ -1,16 +1,26 @@
 Mejor conjunto de rutas:
-Ruta 1: [1, 5, 4, 0, 1, 5, 9, 10, 11, 15, 14] con 60 autos/hora
-Ruta 2: [8, 9, 10, 6, 2, 3, 7, 11, 15, 14, 10] con 55 autos/hora
-Ruta 3: [4, 0, 1, 5, 9, 13, 12, 8, 9, 10, 6] con 61 autos/hora
-Ruta 4: [7, 6, 5, 9, 10, 6, 2, 3, 7, 6, 2] con 62 autos/hora
-Ruta 5: [9, 10, 11, 15, 14, 13, 12, 8, 4, 0, 1] con 63 autos/hora
-Ruta 6: [7, 6, 5, 9, 13, 12, 8, 4, 0, 1, 2] con 54 autos/hora
-Ruta 7: [7, 11, 15, 14, 10, 11, 15, 14, 13, 12, 8] con 62 autos/hora
-Ruta 8: [1, 2, 3, 7, 11, 15, 14, 10, 6, 5, 4] con 59 autos/hora
-Ruta 9: [8, 9, 10, 6, 5, 4, 0, 1, 2, 3, 7] con 54 autos/hora
+Ruta 1: [12, 8, 9, 10, 6] con 41 autos/hora
+Ruta 2: [4, 0, 1, 5, 9] con 41 autos/hora
+Ruta 3: [1, 5, 9, 10, 6] con 42 autos/hora
+Ruta 4: [9, 13, 12, 8, 4] con 42 autos/hora
+Ruta 5: [8, 4, 0, 1, 5] con 41 autos/hora
+Ruta 6: [15, 14, 10, 6, 2] con 41 autos/hora
+Ruta 7: [8, 4, 0, 1, 5] con 41 autos/hora
+Ruta 8: [7, 6, 2, 3, 7] con 40 autos/hora
+Ruta 9: [12, 8, 9, 13, 12] con 42 autos/hora
+Ruta 10: [15, 14, 10, 6, 5] con 40 autos/hora
+Ruta 11: [1, 2, 3, 7, 11] con 41 autos/hora
+Ruta 12: [9, 10, 11, 15, 14] con 42 autos/hora
+Ruta 13: [8, 4, 0, 1, 5] con 40 autos/hora
+Ruta 14: [7, 11, 15, 14, 13] con 41 autos/hora
+Ruta 15: [2, 3, 7, 11, 15] con 41 autos/hora
+Ruta 16: [11, 15, 14, 10, 6] con 41 autos/hora
+Ruta 17: [10, 6, 5, 4, 0] con 42 autos/hora
+Ruta 18: [9, 10, 11, 15, 14] con 42 autos/hora
+Ruta 19: [1, 2, 3, 7, 6] con 41 autos/hora
 
 Mejores parámetros ajustados:
-NUM_RUTAS: 9
-LONG_MAX_RUTAS: 11
-AUTOS_POR_RUTA_MIN: 54
-AUTOS_POR_RUTA_MAX: 64
+NUM_RUTAS: 19
+LONG_MAX_RUTAS: 5
+AUTOS_POR_RUTA_MIN: 40
+AUTOS_POR_RUTA_MAX: 43

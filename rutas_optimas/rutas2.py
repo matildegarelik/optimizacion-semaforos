@@ -4,14 +4,14 @@ import numpy as np
 N = 4  # Tamaño del mapa (4x4)
 
 # Flujo objetivo
-flujo_objetivo_20s = np.array([
+flujo_objetivo_30s = np.array([
     [10, 15, 12, 8],
     [12, 14, 16, 13],
     [13, 16, 17, 12],
     [9, 7, 11, 14]
 ])
 # Flujo objetivo x hora
-flujo_objetivo = flujo_objetivo_20s  * 60
+flujo_objetivo = flujo_objetivo_30s  * 2 * 10
 
 import matplotlib.pyplot as plt
 mejor_rutas = []
