@@ -149,7 +149,7 @@ def agregar_rutas_y_flows(xml_file, rutas_edges, autos_por_ruta):
         nuevo_flow = ET.Element("flow")
         nuevo_flow.set("id", f"f_{i}")
         nuevo_flow.set("begin", "0.00")
-        nuevo_flow.set("end", "3600.00")
+        nuevo_flow.set("end", "600.00")
         nuevo_flow.set("route", nueva_ruta.get("id"))
         nuevo_flow.set("number", str(autos))
         

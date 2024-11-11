@@ -36,7 +36,8 @@ def actualizar_fases_semaforos( vector_tiempos, archivo_xml="../sumo/test.net.xm
 
 def ejecutar_simulacion(sumo_config="../sumo/test.sumocfg", tripinfo_output="../sumo/tripinfo.xml"):
     # Ejecutar la simulación de SUMO
-    subprocess.run(["sumo", "-c", sumo_config, "--tripinfo-output", tripinfo_output])
+    subprocess.run(["sumo", "-c", sumo_config, "--tripinfo-output", tripinfo_output],
+    stderr=subprocess.DEVNULL)
     
     # Parsear tripinfo.xml para obtener las métricas
     tree = ET.parse(tripinfo_output)

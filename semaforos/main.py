@@ -32,9 +32,9 @@ def params_aptitud(individuo):
 ind, it_ev, progreso, mejor_aptitud =  entrenar(
     funcion_aptitud,cantidad_poblacion=100,
     tipo_reemplazo='ELITISMO',
-    aptitud_requerida=100,
+    aptitud_requerida=10,
     longitud=144,
-    max_it=1000, params_aptitud= params_aptitud
+    max_it=1, params_aptitud= params_aptitud
 )
 sol = decodificar(ind)
 print(f"Algoritmo Genético: x = {sol}, f(x) = {mejor_aptitud} Iteraciones: {it_ev}")
