@@ -2,6 +2,7 @@ import random
 import math
 from datetime import datetime
 import csv
+import time
 
 def inicializar_poblacion(longitud, cantidad):
    return [''.join(random.choice('01') for _ in range(longitud)) for _ in range(cantidad)]
@@ -99,21 +100,21 @@ def reproducir(individuos):
             hijos.append(mutacion)
     return hijos
 
-def generar_nueva_generacion(progenitores, fitness_prog, hijos, cantidad_poblacion,tipo='REEMPLAZO TOTAL',mejor_individuo=None):
+def generar_nueva_generacion(progenitores, fitness_prog, hijos, cantidad_poblacion, tipo_seleccion, tipo='REEMPLAZO TOTAL', mejor_individuo=None):
     if tipo == 'REEMPLAZO TOTAL':
         return hijos
     if tipo == 'REEMPLAZO CON BRECHA':
         # elegir 0.2 mejores progenitores y agregar a hijos
-        progenitores_supervivientes,_ = seleccionar(progenitores, fitness_prog, cantidad=math.ceil(0.2 * cantidad_poblacion), tipo='RULETA')
+        progenitores_supervivientes,_ = seleccionar(progenitores, fitness_prog, cantidad=math.ceil(0.2 * cantidad_poblacion), tipo=tipo_seleccion)
         return hijos + progenitores_supervivientes
     if tipo =='ELITISMO':
         hijos.append(mejor_individuo)
         return hijos
 
-def entrenar(funcion_aptitud,cantidad_poblacion=6,tipo_reemplazo='REEMPLAZO TOTAL',max_it=100,aptitud_requerida=-0.55, longitud=10,imprimir=True, params_aptitud=None):
+def entrenar(funcion_aptitud,cantidad_poblacion=6,tipo_reemplazo='REEMPLAZO TOTAL',tipo_seleccion = 'VENTANA', max_it=100,aptitud_requerida=-0.55, longitud=10,imprimir=True, params_aptitud=None):
     fecha_hora_actual = datetime.now().strftime("%Y%m%d_%H%M%S")
     nombre_archivo = f"results/output_{fecha_hora_actual}.csv"
-    
+    start_time = time.time()
     individuos = inicializar_poblacion(longitud, cantidad=cantidad_poblacion)
     mejor_individuo, mejor_aptitud, fitness = evaluar(funcion_aptitud,individuos)
     
@@ -139,11 +140,11 @@ def entrenar(funcion_aptitud,cantidad_poblacion=6,tipo_reemplazo='REEMPLAZO TOTA
                 cantidad_padres = cantidad_poblacion-1
                 #individuos.remove(mejor_individuo)
 
-            progenitores, fitness_prog = seleccionar(individuos, fitness, cantidad=cantidad_padres, tipo='VENTANA')
+            progenitores, fitness_prog = seleccionar(individuos, fitness, cantidad=cantidad_padres, tipo=tipo_seleccion)
 
             hijos = reproducir(progenitores)
             #reemplazo
-            individuos = generar_nueva_generacion(progenitores, fitness_prog, hijos, cantidad_poblacion,tipo=tipo_reemplazo,mejor_individuo=mejor_individuo)
+            individuos = generar_nueva_generacion(progenitores, fitness_prog, hijos, cantidad_poblacion,tipo_seleccion=tipo_seleccion, tipo=tipo_reemplazo,mejor_individuo=mejor_individuo)
 
             #EVALUAR
             mejor_individuo, mejor_aptitud, fitness = evaluar(funcion_aptitud,individuos)
@@ -157,5 +158,6 @@ def entrenar(funcion_aptitud,cantidad_poblacion=6,tipo_reemplazo='REEMPLAZO TOTA
                 print(f"Iteración {it} - Mejor Aptitud: {mejor_aptitud}")
             it+=1
 
-    return mejor_individuo, it, progreso, mejor_aptitud
+    tiempo =time.time()-start_time
+    return mejor_individuo, it, progreso, mejor_aptitud, tiempo
     

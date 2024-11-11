@@ -29,18 +29,18 @@ def params_aptitud(individuo):
     return avg_speed, waiting_time_per_vehicle
 
 
-ind, it_ev, progreso, mejor_aptitud =  entrenar(
-    funcion_aptitud,cantidad_poblacion=100,
+ind, it_ev, progreso, mejor_aptitud, tiempo =  entrenar(
+    funcion_aptitud,cantidad_poblacion=1,
     tipo_reemplazo='ELITISMO',
     aptitud_requerida=10,
     longitud=144,
     max_it=1, params_aptitud= params_aptitud
 )
 sol = decodificar(ind)
-print(f"Algoritmo Genético: x = {sol}, f(x) = {mejor_aptitud} Iteraciones: {it_ev}")
+print(f"Algoritmo Genético: x = {sol}, f(x) = {mejor_aptitud}, Tiempo: {tiempo} seg")
 
 """
-ejemplo_inicial = [(29, 47), (46, 57), (26, 13), (35, 4), (28, 15), (35, 3), (28, 20), (56, 44), (60, 21), (24, 13), (27, 12), (16, 57)]
+ejemplo_inicial = [(29, 21), (56, 4), (28, 4), (40, 10), (30, 37), (44, 6), (32, 7), (8, 20), (48, 61), (62, 50), (61, 0), (40, 33)]
 actualizar_fases_semaforos(ejemplo_inicial)
 waiting_time, avg_speed, waiting_time_per_vehicle = ejecutar_simulacion()
 print('---------------- SIN OPTIMIZACIÓN---------------------')
