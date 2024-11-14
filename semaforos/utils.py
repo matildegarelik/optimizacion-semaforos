@@ -155,7 +155,7 @@ def entrenar(funcion_aptitud,cantidad_poblacion=6,tipo_reemplazo='REEMPLAZO TOTA
             escritor_csv.writerow([it + 1, mejor_aptitud, avg_speed,avg_waiting_time])
 
             if imprimir:
-                print(f"Iteración {it} - Mejor Aptitud: {mejor_aptitud}")
+                print(f"Iteración {it} - Mejor Aptitud: {mejor_aptitud} - Solución: {mejor_individuo} - Tiempo: {time.time()-start_time}s")
             it+=1
 
     tiempo =time.time()-start_time
