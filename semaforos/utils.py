@@ -74,16 +74,18 @@ def cruzar(individuo1, individuo2):
     cruza2 = individuo2[:punto_cruza] + individuo1[punto_cruza:]
     return cruza1, cruza2
 
-def mutar(cruza):
-    punto_mutacion = int(random.uniform(0,len(cruza)))
-    mutacion = (
-        cruza[:punto_mutacion] + 
-        ('0' if cruza[punto_mutacion] == '1' else '1') + 
-        cruza[punto_mutacion + 1:]
-    )
+def mutar(cruza, tasa_mutacion):
+    mutacion = cruza
+    if random.uniform(0,1) < tasa_mutacion:
+        punto_mutacion = int(random.uniform(0,len(cruza)))
+        mutacion = (
+            cruza[:punto_mutacion] + 
+            ('0' if cruza[punto_mutacion] == '1' else '1') + 
+            cruza[punto_mutacion + 1:]
+        )
     return mutacion
 
-def reproducir(individuos):
+def reproducir(individuos, tasa_mutacion):
     # CANTIDAD HIJOS = PADRES SI ES PAR O IMPAR. SI ES IMPAR SE AGREGA COMO HIJO UN PADRE MUTADO
     hijos = []
     for i in range(0,len(individuos), 2):
@@ -91,12 +93,12 @@ def reproducir(individuos):
         individuo2 = individuos[i+1] if i+1 < len(individuos) else None
         if individuo2:
             cruza1, cruza2 = cruzar(individuo1, individuo2)
-            mutacion1 = mutar(cruza1)
-            mutacion2 = mutar(cruza2)
+            mutacion1 = mutar(cruza1, tasa_mutacion)
+            mutacion2 = mutar(cruza2, tasa_mutacion)
             hijos.append(mutacion1)
             hijos.append(mutacion2)
         else:
-            mutacion = mutar(individuo1)
+            mutacion = mutar(individuo1, tasa_mutacion)
             hijos.append(mutacion)
     return hijos
 
@@ -111,7 +113,7 @@ def generar_nueva_generacion(progenitores, fitness_prog, hijos, cantidad_poblaci
         hijos.append(mejor_individuo)
         return hijos
 
-def entrenar(funcion_aptitud,cantidad_poblacion=6,tipo_reemplazo='REEMPLAZO TOTAL',tipo_seleccion = 'VENTANA', max_it=100,aptitud_requerida=-0.55, longitud=10,imprimir=True, params_aptitud=None):
+def entrenar(funcion_aptitud,cantidad_poblacion=6,tipo_reemplazo='REEMPLAZO TOTAL',tipo_seleccion = 'VENTANA', max_it=100,aptitud_requerida=-0.55, tasa_mutacion=0.1, longitud=10,imprimir=True, params_aptitud=None):
     fecha_hora_actual = datetime.now().strftime("%Y%m%d_%H%M%S")
     nombre_archivo = f"results/output_{fecha_hora_actual}.csv"
     start_time = time.time()
@@ -142,7 +144,7 @@ def entrenar(funcion_aptitud,cantidad_poblacion=6,tipo_reemplazo='REEMPLAZO TOTA
 
             progenitores, fitness_prog = seleccionar(individuos, fitness, cantidad=cantidad_padres, tipo=tipo_seleccion)
 
-            hijos = reproducir(progenitores)
+            hijos = reproducir(progenitores, tasa_mutacion)
             #reemplazo
             individuos = generar_nueva_generacion(progenitores, fitness_prog, hijos, cantidad_poblacion,tipo_seleccion=tipo_seleccion, tipo=tipo_reemplazo,mejor_individuo=mejor_individuo)
 
