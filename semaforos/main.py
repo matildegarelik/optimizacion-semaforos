@@ -17,7 +17,7 @@ def funcion_aptitud(individuo):
     # obtener datos de SUMO
     waiting_time, avg_speed, waiting_time_per_vehicle = ejecutar_simulacion()
 
-    f= + avg_speed - waiting_time_per_vehicle # es lo que se busca maximizar
+    f= - waiting_time_per_vehicle # es lo que se busca maximizar
     return f
 
 def params_aptitud(individuo):
@@ -30,20 +30,18 @@ def params_aptitud(individuo):
 
 
 ind, it_ev, progreso, mejor_aptitud, tiempo =  entrenar(
-    funcion_aptitud,cantidad_poblacion=50,
-    tipo_reemplazo='REEMPLAZO CON BRECHA',
-    tipo_seleccion='VENTANA',
-    aptitud_requerida=10,
-    longitud=144,
-    max_it=500,
-    tasa_mutacion=0.1,
-    params_aptitud= params_aptitud
+    funcion_aptitud,max_it=500,params_aptitud= params_aptitud,longitud=144,
+    aptitud_requerida=-5, # justificación: porcentaje de reducción de 85%
+    cantidad_poblacion=50,
+    tasa_supervivencia=0.2, # porcentaje de padres que sobreviven en la próxima generación.
+    tasa_mutacion=0.1
 )
 sol = decodificar(ind)
 print(f"Algoritmo Genético: x = {sol}, f(x) = {mejor_aptitud}, Tiempo: {tiempo} seg")
 
 """
-ejemplo_inicial = [(29, 21), (56, 4), (28, 4), (40, 10), (30, 37), (44, 6), (32, 7), (8, 20), (48, 61), (62, 50), (61, 0), (40, 33)]
+#ejemplo_inicial = [(29, 21), (56, 4), (28, 4), (40, 10), (30, 37), (44, 6), (32, 7), (8, 20), (48, 61), (62, 50), (61, 0), (40, 33)]
+ejemplo_inicial = [(45, 45), (45, 45), (45, 45), (45, 45), (45, 45), (45, 45), (45, 45), (45, 45), (45, 45), (45, 45), (45, 45), (45, 45)]
 actualizar_fases_semaforos(ejemplo_inicial)
 waiting_time, avg_speed, waiting_time_per_vehicle = ejecutar_simulacion()
 print('---------------- SIN OPTIMIZACIÓN---------------------')
@@ -58,4 +56,5 @@ print('---------------- CON OPTIMIZACIÓN---------------------')
 print(f"Tiempo espera total: {waiting_time}")
 print(f"Tiempo espera x vehículo: {waiting_time_per_vehicle}")
 print(f"Velocidad media vehículos: {avg_speed}")
+
 """

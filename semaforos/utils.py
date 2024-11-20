@@ -34,7 +34,7 @@ def ordenar_y_sumar(individuos, fitness_normalizado):
     suma_acumulada = [fitness_ordenado[i] + fitness_ordenado[i+1] for i in range(len(fitness_ordenado)-1)]
     return suma_acumulada, individuos_ordenado
 
-def seleccionar(individuos, fitness, tipo='RULETA', cantidad=10):
+def seleccionar(individuos, fitness, tipo='VENTANA', cantidad=10):
     progenitores =[]
     fitness_prog=[]
     if tipo =='RULETA':
@@ -76,13 +76,16 @@ def cruzar(individuo1, individuo2):
 
 def mutar(cruza, tasa_mutacion):
     mutacion = cruza
-    if random.uniform(0,1) < tasa_mutacion:
-        punto_mutacion = int(random.uniform(0,len(cruza)))
-        mutacion = (
-            cruza[:punto_mutacion] + 
-            ('0' if cruza[punto_mutacion] == '1' else '1') + 
-            cruza[punto_mutacion + 1:]
-        )
+    for i in range(0,5):
+        if random.uniform(0,1) < tasa_mutacion:
+            punto_mutacion = int(random.uniform(0,len(cruza)))
+            mutacion = (
+                mutacion[:punto_mutacion] + 
+                ('0' if cruza[punto_mutacion] == '1' else '1') + 
+                mutacion[punto_mutacion + 1:]
+            )
+    
+
     return mutacion
 
 def reproducir(individuos, tasa_mutacion):
@@ -102,18 +105,15 @@ def reproducir(individuos, tasa_mutacion):
             hijos.append(mutacion)
     return hijos
 
-def generar_nueva_generacion(progenitores, fitness_prog, hijos, cantidad_poblacion, tipo_seleccion, tipo='REEMPLAZO TOTAL', mejor_individuo=None):
-    if tipo == 'REEMPLAZO TOTAL':
-        return hijos
-    if tipo == 'REEMPLAZO CON BRECHA':
-        # elegir 0.2 mejores progenitores y agregar a hijos
-        progenitores_supervivientes,_ = seleccionar(progenitores, fitness_prog, cantidad=math.ceil(0.2 * cantidad_poblacion), tipo=tipo_seleccion)
-        return hijos + progenitores_supervivientes
-    if tipo =='ELITISMO':
-        hijos.append(mejor_individuo)
-        return hijos
+def generar_nueva_generacion(progenitores, fitness_prog, hijos, cantidad_poblacion, tipo_seleccion, mejor_individuo=None, tasa_supervivencia=0.2):
+    # elegir 0.2 mejores progenitores y agregar a hijos
+    progenitores_supervivientes,_ = seleccionar(progenitores, fitness_prog, cantidad=math.ceil(tasa_supervivencia * cantidad_poblacion), tipo=tipo_seleccion)
+    hijos.append(mejor_individuo)
+    return hijos + progenitores_supervivientes
+    
 
-def entrenar(funcion_aptitud,cantidad_poblacion=6,tipo_reemplazo='REEMPLAZO TOTAL',tipo_seleccion = 'VENTANA', max_it=100,aptitud_requerida=-0.55, tasa_mutacion=0.1, longitud=10,imprimir=True, params_aptitud=None):
+def entrenar(funcion_aptitud,cantidad_poblacion=6,tipo_seleccion = 'VENTANA', max_it=100,aptitud_requerida=-0.55, 
+            tasa_mutacion=0.1, longitud=10,imprimir=True, params_aptitud=None, tasa_supervivencia=0.2):
     fecha_hora_actual = datetime.now().strftime("%Y%m%d_%H%M%S")
     nombre_archivo = f"results/output_{fecha_hora_actual}.csv"
     start_time = time.time()
@@ -133,20 +133,14 @@ def entrenar(funcion_aptitud,cantidad_poblacion=6,tipo_reemplazo='REEMPLAZO TOTA
 
         while (mejor_aptitud < aptitud_requerida) and (it < max_it):
 
-            # GENERAR NUEVA POBLACION
-            if(tipo_reemplazo=='REEMPLAZO TOTAL'):
-                cantidad_padres = cantidad_poblacion
-            elif(tipo_reemplazo=='REEMPLAZO CON BRECHA'):
-                cantidad_padres = math.floor(0.8 * cantidad_poblacion)
-            elif(tipo_reemplazo=='ELITISMO'):
-                cantidad_padres = cantidad_poblacion-1
-                #individuos.remove(mejor_individuo)
-
+            # GENERAR NUEVA POBLACION: REEMPLAZO CON BRECHA Y ELITISMO
+            cantidad_padres = math.floor((1-tasa_supervivencia) * cantidad_poblacion)
+            
             progenitores, fitness_prog = seleccionar(individuos, fitness, cantidad=cantidad_padres, tipo=tipo_seleccion)
 
             hijos = reproducir(progenitores, tasa_mutacion)
             #reemplazo
-            individuos = generar_nueva_generacion(progenitores, fitness_prog, hijos, cantidad_poblacion,tipo_seleccion=tipo_seleccion, tipo=tipo_reemplazo,mejor_individuo=mejor_individuo)
+            individuos = generar_nueva_generacion(progenitores, fitness_prog, hijos, cantidad_poblacion,tipo_seleccion=tipo_seleccion, mejor_individuo=mejor_individuo, tasa_supervivencia=tasa_supervivencia)
 
             #EVALUAR
             mejor_individuo, mejor_aptitud, fitness = evaluar(funcion_aptitud,individuos)
