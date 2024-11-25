@@ -62,8 +62,9 @@ def seleccionar(individuos, fitness, tipo='VENTANA', cantidad=10):
             progenitores.append(individuos[indice_seleccionado])
             fitness_prog.append(fitness[indice_seleccionado])
 
-            # reducir el tamaño de la ventana para las siguientes selecciones
-            ventana -= 1
+            if ventana>1:
+                # reducir el tamaño de la ventana para las siguientes selecciones
+                ventana -= 1
 
     #@TODO: METODO COMPETENCIAS
     return progenitores,fitness_prog

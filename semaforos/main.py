@@ -33,7 +33,7 @@ ind, it_ev, progreso, mejor_aptitud, tiempo =  entrenar(
     funcion_aptitud,max_it=500,params_aptitud= params_aptitud,longitud=144,
     aptitud_requerida=-5, # justificación: porcentaje de reducción de 85%
     cantidad_poblacion=10,
-    tasa_supervivencia=0.2, # porcentaje de padres que sobreviven en la próxima generación.
+    tasa_supervivencia=0.8, # porcentaje de padres que sobreviven en la próxima generación.
     tasa_mutacion=0.5
 )
 sol = decodificar(ind)
